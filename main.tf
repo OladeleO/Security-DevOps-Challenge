@@ -20,14 +20,26 @@ provider "google" {
 resource "google_compute_network" "vpc_network_1" {
   project                 = var.project
   name                    = "vpc-server-github-actions"
-  auto_create_subnetworks = true
   mtu                     = 1460
+  subnets = [
+     {
+            subnet_name           = "subnet-server"
+            subnet_ip             = "10.10.10.0/24"
+            subnet_region         = "europe-west1"
+     }
+  ]
 }
 
 resource "google_compute_network" "vpc_network_2" {
   project                 = var.project
   name                    = "vpc-client-github-actions"
-  auto_create_subnetworks = true
   mtu                     = 1460
+  subnets = [
+      {
+         subnet_name           = "subnet-server"
+         subnet_ip             = "10.10.10.0/24"
+         subnet_region         = "europe-west1"
+      }
+   ]
 }
 
