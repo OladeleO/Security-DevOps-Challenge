@@ -17,14 +17,14 @@ provider "google" {
   
 #}
 
-resource "google_compute_network" "vpc_network" {
+resource "google_compute_network" "vpc_network_1" {
   project                 = var.project
   name                    = "vpc-server-github-actions"
   auto_create_subnetworks = true
   mtu                     = 1460
 }
 
-resource "google_compute_network" "vpc_network" {
+resource "google_compute_network" "vpc_network_2" {
   project                 = var.project
   name                    = "vpc-client-github-actions"
   auto_create_subnetworks = true
