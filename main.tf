@@ -96,7 +96,7 @@ resource "google_compute_instance" "vm_1" {
   }
 
   network_interface {
-    network = google_compute_network.vpc_network_1.name
+    network = google_compute_subnetwork.public-subnetwork_1.name
   }
 }
 
@@ -123,6 +123,6 @@ resource "google_compute_instance" "vm_2" {
   }
 
   network_interface {
-    network = google_compute_network.vpc_network_2.name
+    network = google_compute_subnetwork.public-subnetwork_2.name
   }
 }
