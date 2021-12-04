@@ -85,7 +85,7 @@ resource "google_compute_firewall" "default_2" {
 ##### VM Client Creation
 resource "google_compute_instance" "vm_1" {
   provider     = google-beta
-  name         = "vm_client"
+  name         = "vm-client"
   machine_type = "e2-medium"
   zone = "europe-west1-b" 
 
@@ -104,7 +104,7 @@ resource "google_compute_instance" "vm_1" {
 ##### VM Server Creation
 resource "google_compute_instance" "vm_2" {
   provider     = google-beta
-  name         = "vm_server"
+  name         = "vm-server"
   machine_type = "e2-medium"
   zone = "europe-west2-b"
   metadata_startup_script = <<-EOF
