@@ -87,6 +87,7 @@ resource "google_compute_instance" "vm_1" {
   provider     = google-beta
   name         = "vm_client"
   machine_type = "e2-medium"
+  zone         = "europe-west1-b" 
 
   boot_disk {
     initialize_params {
@@ -105,6 +106,7 @@ resource "google_compute_instance" "vm_2" {
   provider     = google-beta
   name         = "vm_server"
   machine_type = "e2-medium"
+  zone         = "europe-west2-b"
   metadata_startup_script = <<-EOF
     #! /bin/bash
     apt update
