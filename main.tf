@@ -21,25 +21,26 @@ resource "google_compute_network" "vpc_network_1" {
   project                 = var.project
   name                    = "vpc-server-github-actions"
   mtu                     = 1460
-  subnets = [
-     {
-            subnet_name           = "subnet-server-github-actions"
-            subnet_ip             = "10.10.10.0/24"
-            subnet_region         = "europe-west1"
-     }
-  ]
 }
 
 resource "google_compute_network" "vpc_network_2" {
   project                 = var.project
   name                    = "vpc-client-github-actions"
   mtu                     = 1460
-  subnets = [
-      {
-            subnet_name           = "subnet-client-github-actions"
-            subnet_ip             = "192.168.1.0/24"
-            subnet_region         = "europe-west2"
-      }
-   ]
 }
 
+
+resource "google_compute_subnetwork" "public-subnetwork" {
+  name          = "subnet-server-github-actions"
+  ip_cidr_range = "10.10.10.0/24"
+  region        = "europe-west1"
+  network       = google_compute_network.vpc_network_1.name
+}
+
+
+resource "google_compute_subnetwork" "public-subnetwork" {
+  name          = "subnet-client-github-actions"
+  ip_cidr_range = "192.168.1.0/24"
+  region        = "europe-west2"
+  network       = google_compute_network.vpc_network_2.name
+}
