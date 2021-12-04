@@ -23,7 +23,7 @@ resource "google_compute_network" "vpc_network_1" {
   mtu                     = 1460
   subnets = [
      {
-            subnet_name           = "subnet-server"
+            subnet_name           = "subnet-server-github-actions"
             subnet_ip             = "10.10.10.0/24"
             subnet_region         = "europe-west1"
      }
@@ -36,9 +36,9 @@ resource "google_compute_network" "vpc_network_2" {
   mtu                     = 1460
   subnets = [
       {
-         subnet_name           = "subnet-server"
-         subnet_ip             = "10.10.10.0/24"
-         subnet_region         = "europe-west1"
+            subnet_name           = "subnet-client-github-actions"
+            subnet_ip             = "192.168.1.0/24"
+            subnet_region         = "europe-west2"
       }
    ]
 }
