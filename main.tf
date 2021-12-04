@@ -4,7 +4,7 @@ provider "google" {
    
    project = var.project
    region  = var.region
-   zone    = var.region
+   zone    = var.zone
 }
 
 #resource "google_container_cluster" "my_vpc_native_cluster" {
@@ -18,15 +18,15 @@ provider "google" {
 #}
 
 resource "google_compute_network" "vpc_network" {
-  project                 = "my-project-name"
-  name                    = "vpc-server"
+  project                 = var.project
+  name                    = "vpc-server-github-actions"
   auto_create_subnetworks = true
   mtu                     = 1460
 }
 
 resource "google_compute_network" "vpc_network" {
-  project                 = "my-project-name"
-  name                    = "vpc-client"
+  project                 = var.project
+  name                    = "vpc-client-github-actions"
   auto_create_subnetworks = true
   mtu                     = 1460
 }
