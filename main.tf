@@ -30,7 +30,7 @@ resource "google_compute_network" "vpc_network_2" {
 }
 
 
-resource "google_compute_subnetwork" "public-subnetwork" {
+resource "google_compute_subnetwork" "public-subnetwork_1" {
   name          = "subnet-server-github-actions"
   ip_cidr_range = "10.10.10.0/24"
   region        = "europe-west1"
@@ -38,7 +38,7 @@ resource "google_compute_subnetwork" "public-subnetwork" {
 }
 
 
-resource "google_compute_subnetwork" "public-subnetwork" {
+resource "google_compute_subnetwork" "public-subnetwork_2" {
   name          = "subnet-client-github-actions"
   ip_cidr_range = "192.168.1.0/24"
   region        = "europe-west2"
