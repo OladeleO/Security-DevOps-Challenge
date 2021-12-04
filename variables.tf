@@ -1,5 +1,5 @@
 variable "project" {
-  default = "mythic-inn-323010"
+  default = "security-devops-project"
 }
 
 variable "region" {
