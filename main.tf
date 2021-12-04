@@ -17,6 +17,9 @@ provider "google" {
   
 #}
 
+
+##### 1st VPC Creation
+
 resource "google_compute_network" "vpc_network_1" {
   project                 = var.project
   name                    = "vpc-server-github-actions"
@@ -24,6 +27,8 @@ resource "google_compute_network" "vpc_network_1" {
   mtu                     = 1460
 }
 
+
+##### 2nd VPC Creation
 resource "google_compute_network" "vpc_network_2" {
   project                 = var.project
   name                    = "vpc-client-github-actions"
@@ -31,18 +36,48 @@ resource "google_compute_network" "vpc_network_2" {
   mtu                     = 1460
 }
 
-
+##### Subnetwork 1st VPC
 resource "google_compute_subnetwork" "public-subnetwork_1" {
-  name          = "subnet-server-github-actions"
-  ip_cidr_range = "10.10.10.0/24"
-  region        = "europe-west1"
-  network       = google_compute_network.vpc_network_1.name
+  name                     = "subnet-server-github-actions"
+  ip_cidr_range            = "10.10.10.0/24"
+  region                   = "europe-west1"
+  network                  = google_compute_network.vpc_network_1.name
 }
 
-
+##### Subnetwork 2nd VPC
 resource "google_compute_subnetwork" "public-subnetwork_2" {
-  name          = "subnet-client-github-actions"
-  ip_cidr_range = "192.168.1.0/24"
-  region        = "europe-west2"
-  network       = google_compute_network.vpc_network_2.name
+  name                       = "subnet-client-github-actions"
+  ip_cidr_range              = "192.168.1.0/24"
+  region                     = "europe-west2"
+  network                    = google_compute_network.vpc_network_2.name
+}
+
+##### Firewall rule 1st VPC
+resource "google_compute_firewall" "default_1" {
+  name                       = "allow-icmp-ssh"
+  network                    = google_compute_network.vpc_network_1.name
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+}
+
+##### Firewall rule 2nd VPC
+resource "google_compute_firewall" "default_2" {
+  name                       = "allow-icmp-ssh-http"
+  network                    = google_compute_network.vpc_network_2.name
+
+  allow {
+    protocol = "icmp"
+  }
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22","80"]
+  }
 }
