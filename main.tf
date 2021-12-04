@@ -81,3 +81,46 @@ resource "google_compute_firewall" "default_2" {
     ports    = ["22","80"]
   }
 }
+
+##### VM Client Creation
+resource "google_compute_instance" "vm_1" {
+  provider     = google-beta
+  name         = "vm_client"
+  machine_type = "e2-medium"
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = google_compute_network.vpc_network_1.name
+  }
+}
+
+
+##### VM Server Creation
+resource "google_compute_instance" "vm_2" {
+  provider     = google-beta
+  name         = "vm_server"
+  machine_type = "e2-medium"
+  metadata_startup_script = <<-EOF
+    #! /bin/bash
+    apt update
+    apt -y install apache2
+    service apache2 start
+    cat <<EOF > /var/www/html/index.html
+    <html><body><p>Hi Vivacity this is my Hello World page !</p></body></html>"
+    EOF
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-9"
+    }
+  }
+
+  network_interface {
+    network = google_compute_network.vpc_network_2.name
+  }
+}
