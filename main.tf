@@ -107,13 +107,15 @@ resource "google_compute_instance" "vm_2" {
   name         = "vm-server"
   machine_type = "e2-medium"
   zone         = "europe-west2-b"
-  metadata_startup_script = <<-EOF
+  metadata     = {
+     startup_script = <<-SCRIPT
     #! /bin/bash \
     sudo apt update \
     sudo apt -y install apache2 \
     sudo service apache2 start \
     sudo echo "<html><body><p>Hi this is my wonderful Hello World page !</p></body></html>" > /var/www/html/index.html 
-    EOF  
+    SCRIPT
+  }
 
   boot_disk {
     initialize_params {
