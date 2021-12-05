@@ -117,7 +117,6 @@ resource "google_compute_instance" "vm_2" {
 #    sudo echo "<html><body><p>Hi this is my wonderful Hello World page !</p></body></html>" > /var/www/html/index.html 
 #    SCRIPT
 #     startup_script = "echo hi > /test.txt"
-  }
 
   boot_disk {
     initialize_params {
