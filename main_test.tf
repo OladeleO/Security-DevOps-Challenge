@@ -125,6 +125,7 @@ resource "google_compute_instance" "vm_2" {
 
   network_interface {
     subnetwork = google_compute_subnetwork.public-subnetwork_2.name
+    access_config {}
   }
 }
 
