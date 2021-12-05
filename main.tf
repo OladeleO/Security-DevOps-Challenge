@@ -180,8 +180,8 @@ resource "google_compute_vpn_tunnel" "tunnel_client_to_server" {
   name          = "tunnel_client_to_server"
   peer_ip       = google_compute_address.vpn_static_ip_client.address
   shared_secret = "gcprocks"
-  local_traffic_selector = "10.10.10.0\24"
-  remote_traffic_selector = "192.168.1.0\24"
+  local_traffic_selector = "10.10.10.0/24"
+  remote_traffic_selector = "192.168.1.0/24"
 
   target_vpn_gateway = google_compute_vpn_gateway.target_gateway_client.id
 
@@ -196,8 +196,8 @@ resource "google_compute_vpn_tunnel" "tunnel_server_to_client" {
   name          = "tunnel_client_to_server"
   peer_ip       = google_compute_address.vpn_static_ip_server.address
   shared_secret = "gcprocks"
-  local_traffic_selector = "192.168.1.0\24"
-  remote_traffic_selector = "10.10.10.0\24"
+  local_traffic_selector = "192.168.1.0/24"
+  remote_traffic_selector = "10.10.10.0/24"
 
   target_vpn_gateway = google_compute_vpn_gateway.target_gateway_server.id
 
