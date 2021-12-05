@@ -179,7 +179,7 @@ resource "google_compute_vpn_tunnel" "tunnel1" {
   peer_ip       = google_compute_address.vpn_static_ip_client.address
   shared_secret = "a secret message"
 
-  target_vpn_gateway = google_compute_vpn_gateway.target_gateway.id
+  target_vpn_gateway = google_compute_vpn_gateway.target_gateway_client.id
 
   depends_on = [
     google_compute_forwarding_rule.fr_esp,
