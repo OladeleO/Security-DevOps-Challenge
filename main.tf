@@ -151,14 +151,14 @@ resource "google_compute_address" "vpn_static_ip_server" {
 }
 
 resource "google_compute_forwarding_rule" "fr_esp_client" {
-  name        = "fr-esp"
+  name        = "fr-esp-client"
   ip_protocol = "ESP"
   ip_address  = google_compute_address.vpn_static_ip_client.address
   target      = google_compute_vpn_gateway.target_gateway_client.id
 }
 
 resource "google_compute_forwarding_rule" "fr_udp500_client" {
-  name        = "fr-udp500"
+  name        = "fr-udp500-client"
   ip_protocol = "UDP"
   port_range  = "500"
   ip_address  = google_compute_address.vpn_static_ip_client.address
@@ -166,7 +166,7 @@ resource "google_compute_forwarding_rule" "fr_udp500_client" {
 }
 
 resource "google_compute_forwarding_rule" "fr_udp4500_client" {
-  name        = "fr-udp4500"
+  name        = "fr-udp4500-client"
   ip_protocol = "UDP"
   port_range  = "4500"
   ip_address  = google_compute_address.vpn_static_ip_client.address
@@ -174,14 +174,14 @@ resource "google_compute_forwarding_rule" "fr_udp4500_client" {
 }
 
 resource "google_compute_forwarding_rule" "fr_esp_server" {
-  name        = "fr-esp"
+  name        = "fr-esp-server"
   ip_protocol = "ESP"
   ip_address  = google_compute_address.vpn_static_ip_server.address
   target      = google_compute_vpn_gateway.target_gateway_server.id
 }
 
 resource "google_compute_forwarding_rule" "fr_udp500_server" {
-  name        = "fr-udp500"
+  name        = "fr-udp500-server"
   ip_protocol = "UDP"
   port_range  = "500"
   ip_address  = google_compute_address.vpn_static_ip_server.address
@@ -189,7 +189,7 @@ resource "google_compute_forwarding_rule" "fr_udp500_server" {
 }
 
 resource "google_compute_forwarding_rule" "fr_udp4500_server" {
-  name        = "fr-udp4500"
+  name        = "fr-udp4500-server"
   ip_protocol = "UDP"
   port_range  = "4500"
   ip_address  = google_compute_address.vpn_static_ip_server.address
