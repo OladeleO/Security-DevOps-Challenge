@@ -109,10 +109,10 @@ resource "google_compute_instance" "vm_2" {
   zone         = "europe-west2-b"
   metadata     = {
      startup_script = <<-SCRIPT
-    #! /bin/bash \
-    sudo apt update \
-    sudo apt -y install apache2 \
-    sudo service apache2 start \
+    #! /bin/bash
+    sudo apt update
+    sudo apt -y install apache2
+    sudo service apache2 start
     sudo echo "<html><body><p>Hi this is my wonderful Hello World page !</p></body></html>" > /var/www/html/index.html 
     SCRIPT
   }
