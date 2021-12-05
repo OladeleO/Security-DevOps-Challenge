@@ -180,6 +180,8 @@ resource "google_compute_vpn_tunnel" "tunnel1" {
   name          = "tunnel1"
   peer_ip       = google_compute_address.vpn_static_ip_client.address
   shared_secret = "a secret message"
+  local_traffic_selector = google_compute_subnetwork.public-subnetwork_1.ip_cidr_range
+  remote_traffic_selector = google_compute_subnetwork.public-subnetwork_2.ip_cidr_range
 
   target_vpn_gateway = google_compute_vpn_gateway.target_gateway_client.id
 
