@@ -126,3 +126,76 @@ resource "google_compute_instance" "vm_2" {
     subnetwork = google_compute_subnetwork.public-subnetwork_2.name
   }
 }
+
+############ Ping before VPN ?
+
+##### VPN Creation
+resource "google_compute_vpn_gateway" "target_gateway_client" {
+  name    = "vpn-gateway-client"
+  network = google_compute_subnetwork.public-subnetwork_1.id
+}
+
+resource "google_compute_vpn_gateway" "target_gateway_server" {
+  name    = "vpn-gateway-server"
+  network = google_compute_subnetwork.public-subnetwork_2.id
+}
+
+resource "google_compute_address" "vpn_static_ip_client" {
+  name = "vpn-static-ip-client"
+  network = google_compute_subnetwork.public-subnetwork_1.id   
+}
+
+resource "google_compute_address" "vpn_static_ip_server" {
+  name = "vpn-static-ip-server"
+  network = google_compute_subnetwork.public-subnetwork_2.id
+}
+
+resource "google_compute_forwarding_rule" "fr_esp" {
+  name        = "fr-esp"
+  ip_protocol = "ESP"
+  ip_address  = google_compute_address.vpn_static_ip_client.address
+  target      = google_compute_vpn_gateway.target_gateway_client.id
+}
+
+resource "google_compute_forwarding_rule" "fr_udp500" {
+  name        = "fr-udp500"
+  ip_protocol = "UDP"
+  port_range  = "500"
+  ip_address  = google_compute_address.vpn_static_ip_client.address
+  target      = google_compute_vpn_gateway.target_gateway_client.id
+}
+
+resource "google_compute_forwarding_rule" "fr_udp4500" {
+  name        = "fr-udp4500"
+  ip_protocol = "UDP"
+  port_range  = "4500"
+  ip_address  = google_compute_address.vpn_static_ip_client.address
+  target      = google_compute_vpn_gateway.target_gateway_client.id
+}
+
+#######################################################################
+
+
+resource "google_compute_vpn_tunnel" "tunnel1" {
+  name          = "tunnel1"
+  peer_ip       = google_compute_address.vpn_static_ip_client.address
+  shared_secret = "a secret message"
+
+  target_vpn_gateway = google_compute_vpn_gateway.target_gateway.id
+
+  depends_on = [
+    google_compute_forwarding_rule.fr_esp,
+    google_compute_forwarding_rule.fr_udp500,
+    google_compute_forwarding_rule.fr_udp4500,
+  ]
+}
+
+resource "google_compute_route" "route1" {
+  name       = "route1"
+  network    = google_compute_network.network1.name
+  dest_range = google_compute_network.vpc_network_2.address
+  priority   = 1000
+
+  next_hop_vpn_tunnel = google_compute_vpn_tunnel.tunnel1.id
+}
+
