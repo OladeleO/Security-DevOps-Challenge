@@ -107,7 +107,7 @@ resource "google_compute_instance" "vm_2" {
   name         = "vm-server"
   machine_type = "e2-medium"
   zone         = "europe-west2-b"
-  metadata_startup_script = "echo hi > ~/test.txt"
+  metadata_startup_script = file("startup_script.sh")
 #  metadata     = {
 #     startup_script = <<-SCRIPT
 #    #! /bin/bash
