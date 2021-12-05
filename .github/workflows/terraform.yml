@@ -110,6 +110,25 @@ jobs:
     - name: Terraform Apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
+      
+  sensitive-info-check:
+    runs-on: ubuntu-latest
+    name: sensitive-info-check
+    steps:  
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Check password
+      uses: AlicanAkkus/pinder-action@0.1
+      
+  
+  compliance-check:
+  # This job aims to scan the terraform file for security issue as compliance as code
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Test with Checkov
+        run: |
+          pip install checkov
+          checkov -d .
 
 #    - name: 'Terraform Output'
 #      id: terraform
