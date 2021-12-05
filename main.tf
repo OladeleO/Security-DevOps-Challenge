@@ -191,7 +191,7 @@ resource "google_compute_vpn_tunnel" "tunnel1" {
 resource "google_compute_route" "route1" {
   name       = "route1"
   network    = google_compute_subnetwork.public-subnetwork_1.id
-  dest_range = google_compute_network.vpc_network_2.address
+  dest_range = google_compute_network.public-subnetwork_2.ip_cidr_range
   priority   = 1000
 
   next_hop_vpn_tunnel = google_compute_vpn_tunnel.tunnel1.id
