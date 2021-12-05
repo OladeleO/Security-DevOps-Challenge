@@ -139,7 +139,7 @@ resource "google_compute_vpn_gateway" "target_gateway_client" {
 resource "google_compute_vpn_gateway" "target_gateway_server" {
   name    = "vpn-gateway-server-terraform"
   #network = google_compute_subnetwork.public-subnetwork_2.id
-  network = google_compute_network.vpc_network_1.name
+  network = google_compute_network.vpc_network_2.name
 }
 
 resource "google_compute_address" "vpn_static_ip_client" {
