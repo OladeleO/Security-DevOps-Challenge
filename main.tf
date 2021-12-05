@@ -117,7 +117,6 @@ resource "google_compute_instance" "vm_2" {
 #    sudo echo "<html><body><p>Hi this is my wonderful Hello World page !</p></body></html>" > /var/www/html/index.html 
 #    SCRIPT
 #     startup_script = "echo hi > /test.txt"
-
   boot_disk {
     initialize_params {
       image = "debian-cloud/debian-9"
@@ -250,5 +249,9 @@ resource "google_compute_route" "route_server_to_client" {
   priority   = 1000
 
   next_hop_vpn_tunnel = google_compute_vpn_tunnel.tunnel_server_to_client.id
+}
+
+output "server_public_ip" {
+  value = google_compute_instance.vm_2.access_config.nat_ip
 }
  ##################################################################################
