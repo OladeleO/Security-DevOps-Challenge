@@ -150,14 +150,14 @@ resource "google_compute_address" "vpn_static_ip_server" {
   name = "vpn-static-ip-server-terraform"
 }
 
-resource "google_compute_forwarding_rule" "fr_esp" {
+resource "google_compute_forwarding_rule" "fr_esp_client" {
   name        = "fr-esp"
   ip_protocol = "ESP"
   ip_address  = google_compute_address.vpn_static_ip_client.address
   target      = google_compute_vpn_gateway.target_gateway_client.id
 }
 
-resource "google_compute_forwarding_rule" "fr_udp500" {
+resource "google_compute_forwarding_rule" "fr_udp500_client" {
   name        = "fr-udp500"
   ip_protocol = "UDP"
   port_range  = "500"
@@ -165,12 +165,35 @@ resource "google_compute_forwarding_rule" "fr_udp500" {
   target      = google_compute_vpn_gateway.target_gateway_client.id
 }
 
-resource "google_compute_forwarding_rule" "fr_udp4500" {
+resource "google_compute_forwarding_rule" "fr_udp4500_client" {
   name        = "fr-udp4500"
   ip_protocol = "UDP"
   port_range  = "4500"
   ip_address  = google_compute_address.vpn_static_ip_client.address
   target      = google_compute_vpn_gateway.target_gateway_client.id
+}
+
+resource "google_compute_forwarding_rule" "fr_esp_server" {
+  name        = "fr-esp"
+  ip_protocol = "ESP"
+  ip_address  = google_compute_address.vpn_static_ip_server.address
+  target      = google_compute_vpn_gateway.target_gateway_server.id
+}
+
+resource "google_compute_forwarding_rule" "fr_udp500_server" {
+  name        = "fr-udp500"
+  ip_protocol = "UDP"
+  port_range  = "500"
+  ip_address  = google_compute_address.vpn_static_ip_server.address
+  target      = google_compute_vpn_gateway.target_gateway_server.id
+}
+
+resource "google_compute_forwarding_rule" "fr_udp4500_server" {
+  name        = "fr-udp4500"
+  ip_protocol = "UDP"
+  port_range  = "4500"
+  ip_address  = google_compute_address.vpn_static_ip_server.address
+  target      = google_compute_vpn_gateway.target_gateway_server.id
 }
 
 #######################################################################
@@ -186,9 +209,9 @@ resource "google_compute_vpn_tunnel" "tunnel_client_to_server" {
   target_vpn_gateway = google_compute_vpn_gateway.target_gateway_client.id
 
   depends_on = [
-    google_compute_forwarding_rule.fr_esp,
-    google_compute_forwarding_rule.fr_udp500,
-    google_compute_forwarding_rule.fr_udp4500,
+    google_compute_forwarding_rule.fr_esp_client,
+    google_compute_forwarding_rule.fr_udp500_client,
+    google_compute_forwarding_rule.fr_udp4500_client,
   ]
 }
 
@@ -202,9 +225,9 @@ resource "google_compute_vpn_tunnel" "tunnel_server_to_client" {
   target_vpn_gateway = google_compute_vpn_gateway.target_gateway_server.id
 
   depends_on = [
-    google_compute_forwarding_rule.fr_esp,
-    google_compute_forwarding_rule.fr_udp500,
-    google_compute_forwarding_rule.fr_udp4500,
+    google_compute_forwarding_rule.fr_esp_server,
+    google_compute_forwarding_rule.fr_udp500_server,
+    google_compute_forwarding_rule.fr_udp4500_server,
   ]
 }
 
