@@ -109,10 +109,10 @@ resource "google_compute_instance" "vm_2" {
   zone         = "europe-west2-b"
   metadata_startup_script = <<-EOF
     #! /bin/bash \
-    apt update \
-    apt -y install apache2 \
-    service apache2 start \
-    echo "<html><body><p>Hi Vivacity this is my Hello World page !</p></body></html>" > /var/www/html/index.html 
+    sudo apt update \
+    sudo apt -y install apache2 \
+    sudo service apache2 start \
+    sudo echo "<html><body><p>Hi this is my wonderful Hello World page !</p></body></html>" > /var/www/html/index.html 
     EOF  
 
   boot_disk {
