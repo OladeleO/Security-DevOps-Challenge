@@ -141,13 +141,11 @@ resource "google_compute_vpn_gateway" "target_gateway_server" {
 }
 
 resource "google_compute_address" "vpn_static_ip_client" {
-  name = "vpn-static-ip-client"
-  network = google_compute_subnetwork.public-subnetwork_1.id   
+  name = "vpn-static-ip-client" 
 }
 
 resource "google_compute_address" "vpn_static_ip_server" {
   name = "vpn-static-ip-server"
-  network = google_compute_subnetwork.public-subnetwork_2.id
 }
 
 resource "google_compute_forwarding_rule" "fr_esp" {
