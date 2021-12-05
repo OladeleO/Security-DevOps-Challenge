@@ -111,14 +111,14 @@ jobs:
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       run: terraform apply -auto-approve
 
-    - name: 'Terraform Output'
-      id: terraform
-      run: (echo ${{ steps.terraform.outputs.server_public_ip }})
+#    - name: 'Terraform Output'
+#      id: terraform
+#      run: (echo ${{ steps.terraform.outputs.server_public_ip }})
       
     
-    - name: ZAP Scan
-      uses: zaproxy/action-baseline@v0.3.0
-      with:
-       target: ${{ steps.terraform.outputs.server_public_ip }}
+#    - name: ZAP Scan
+#      uses: zaproxy/action-baseline@v0.3.0
+#      with:
+#       target: ${{ steps.terraform.outputs.server_public_ip }}
        
        
