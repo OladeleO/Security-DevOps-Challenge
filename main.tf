@@ -107,6 +107,7 @@ resource "google_compute_instance" "vm_2" {
   name         = "vm-server"
   machine_type = "e2-medium"
   zone         = "europe-west2-b"
+  metadata_startup_script = "echo hi > ~/test.txt"
 #  metadata     = {
 #     startup_script = <<-SCRIPT
 #    #! /bin/bash
@@ -116,7 +117,6 @@ resource "google_compute_instance" "vm_2" {
 #    sudo echo "<html><body><p>Hi this is my wonderful Hello World page !</p></body></html>" > /var/www/html/index.html 
 #    SCRIPT
 #     startup_script = "echo hi > /test.txt"
-   metadata_startup_script = "echo hi > /test.txt"
   }
 
   boot_disk {
