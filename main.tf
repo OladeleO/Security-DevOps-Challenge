@@ -107,7 +107,7 @@ resource "google_compute_instance" "vm_2" {
   name         = "vm-server"
   machine_type = "e2-medium"
   zone         = "europe-west2-b"
-  metadata     = {
+#  metadata     = {
 #     startup_script = <<-SCRIPT
 #    #! /bin/bash
 #    sudo apt update
@@ -115,7 +115,8 @@ resource "google_compute_instance" "vm_2" {
 #    sudo service apache2 start
 #    sudo echo "<html><body><p>Hi this is my wonderful Hello World page !</p></body></html>" > /var/www/html/index.html 
 #    SCRIPT
-     startup_script = "echo hi > /test.txt"
+#     startup_script = "echo hi > /test.txt"
+   metadata_startup_script = "echo hi > /test.txt"
   }
 
   boot_disk {
