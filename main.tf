@@ -176,12 +176,12 @@ resource "google_compute_forwarding_rule" "fr_udp4500" {
 #######################################################################
 
 
-resource "google_compute_vpn_tunnel" "tunnel1" {
-  name          = "tunnel1"
+resource "google_compute_vpn_tunnel" "tunnel_client_to_server" {
+  name          = "tunnel_client_to_server"
   peer_ip       = google_compute_address.vpn_static_ip_client.address
-  shared_secret = "a secret message"
-  local_traffic_selector = google_compute_subnetwork.public-subnetwork_1.ip_cidr_range
-  remote_traffic_selector = google_compute_subnetwork.public-subnetwork_2.ip_cidr_range
+  shared_secret = "gcprocks"
+  local_traffic_selector = "10.10.10.0\24"
+  remote_traffic_selector = "192.168.1.0\24"
 
   target_vpn_gateway = google_compute_vpn_gateway.target_gateway_client.id
 
@@ -192,12 +192,37 @@ resource "google_compute_vpn_tunnel" "tunnel1" {
   ]
 }
 
-resource "google_compute_route" "route1" {
+resource "google_compute_vpn_tunnel" "tunnel_server_to_client" {
+  name          = "tunnel_client_to_server"
+  peer_ip       = google_compute_address.vpn_static_ip_server.address
+  shared_secret = "gcprocks"
+  local_traffic_selector = "192.168.1.0\24"
+  remote_traffic_selector = "10.10.10.0\24"
+
+  target_vpn_gateway = google_compute_vpn_gateway.target_gateway_server.id
+
+  depends_on = [
+    google_compute_forwarding_rule.fr_esp,
+    google_compute_forwarding_rule.fr_udp500,
+    google_compute_forwarding_rule.fr_udp4500,
+  ]
+}
+
+resource "google_compute_route" "route_client_to_server" {
   name       = "route1"
   network    = google_compute_subnetwork.public-subnetwork_1.id
   dest_range = google_compute_subnetwork.public-subnetwork_2.ip_cidr_range
   priority   = 1000
 
-  next_hop_vpn_tunnel = google_compute_vpn_tunnel.tunnel1.id
+  next_hop_vpn_tunnel = google_compute_vpn_tunnel.tunnel_client_to_server.id
+}
+
+resource "google_compute_route" "route_server_to_client" {
+  name       = "route1"
+  network    = google_compute_subnetwork.public-subnetwork_2.id
+  dest_range = google_compute_subnetwork.public-subnetwork_1.ip_cidr_range
+  priority   = 1000
+
+  next_hop_vpn_tunnel = google_compute_vpn_tunnel.tunnel_server_to_client.id
 }
  ########################################################################
