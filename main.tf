@@ -131,23 +131,23 @@ resource "google_compute_instance" "vm_2" {
 
 ##### VPN Creation
 resource "google_compute_vpn_gateway" "target_gateway_client" {
-  name    = "vpn-gateway-client"
+  name    = "vpn-gateway-client-terraform"
   #network = google_compute_subnetwork.public-subnetwork_1.id
   network = google_compute_network.vpc_network_1.name
 }
 
 resource "google_compute_vpn_gateway" "target_gateway_server" {
-  name    = "vpn-gateway-server"
+  name    = "vpn-gateway-server-terraform"
   #network = google_compute_subnetwork.public-subnetwork_2.id
   network = google_compute_network.vpc_network_1.name
 }
 
 resource "google_compute_address" "vpn_static_ip_client" {
-  name = "vpn-static-ip-client" 
+  name = "vpn-static-ip-client-terraform" 
 }
 
 resource "google_compute_address" "vpn_static_ip_server" {
-  name = "vpn-static-ip-server"
+  name = "vpn-static-ip-server-terraform"
 }
 
 resource "google_compute_forwarding_rule" "fr_esp" {
