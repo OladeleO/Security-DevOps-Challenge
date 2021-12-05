@@ -1,5 +1,5 @@
 variable "project" {
-  default = "security-devops-project"
+  default = "security-devops-challenge"
 }
 
 variable "region" {
