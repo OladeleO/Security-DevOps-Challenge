@@ -113,7 +113,7 @@ jobs:
       
     # Terraform destroy
     - name: Terraform Destroy
-      run: terraform destroy
+      run: terraform destroy -auto-approve
       
   sensitive-info-check:
     runs-on: ubuntu-latest
