@@ -1,5 +1,5 @@
 variable "project" {
-  default = ${{ secrets.GCP_PROJECT_ID }}
+  default = secrets.GCP_PROJECT_ID
   senstive = true 
 }
 
