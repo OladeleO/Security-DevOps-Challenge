@@ -1,5 +1,5 @@
 variable "project" {
-  default = (echo secrets.GCP_PROJECT_ID)
+  default = "security-devops-challenge"
   senstive = true 
 }
 
