@@ -27,7 +27,7 @@ resource "google_compute_network" "vpc_network_2" {
 
 ##### Subnetwork 1st VPC
 resource "google_compute_subnetwork" "public_subnetwork_1" {
-  name          = "subnet-server-github-actions"
+  name          = "subnet-client-github-actions"
   ip_cidr_range = "10.10.10.0/24"
   region        = "europe-west1"
   network       = google_compute_network.vpc_network_1.name
@@ -35,7 +35,7 @@ resource "google_compute_subnetwork" "public_subnetwork_1" {
 
 ##### Subnetwork 2nd VPC
 resource "google_compute_subnetwork" "public_subnetwork_2" {
-  name          = "subnet-client-github-actions"
+  name          = "subnet-server-github-actions"
   ip_cidr_range = "192.168.1.0/24"
   region        = "europe-west2"
   network       = google_compute_network.vpc_network_2.name
@@ -76,7 +76,7 @@ resource "google_compute_instance" "vm_1" {
   provider     = google-beta
   name         = "vm-client"
   machine_type = "e2-medium"
-  zone         = "europe-west2-b" 
+  zone         = "europe-west1-b" 
 
   boot_disk {
     initialize_params {
@@ -95,7 +95,7 @@ resource "google_compute_instance" "vm_2" {
   provider     = google-beta
   name         = "vm-server"
   machine_type = "e2-medium"
-  zone         = "europe-west1-b"
+  zone         = "europe-west2-b"
   metadata_startup_script = file("startup_script.sh")
 #  metadata     = {
 #     startup_script = <<-SCRIPT
