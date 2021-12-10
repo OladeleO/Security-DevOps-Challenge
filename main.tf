@@ -236,7 +236,7 @@ resource "google_compute_vpn_tunnel" "tunnel_server_to_client" {
 resource "google_compute_route" "route_client_to_server" {
   name       = "route-client-to-server"
   network    = google_compute_network.vpc_network_1.name
-  dest_range = google_compute_subnetwork.public-subnetwork_2.ip_cidr_range
+  dest_range = google_compute_subnetwork.public_subnetwork_2.ip_cidr_range
   priority   = 1000
 
   next_hop_vpn_tunnel = google_compute_vpn_tunnel.tunnel_client_to_server.id
@@ -245,7 +245,7 @@ resource "google_compute_route" "route_client_to_server" {
 resource "google_compute_route" "route_server_to_client" {
   name       = "route-server-to-client"
   network    = google_compute_network.vpc_network_2.name
-  dest_range = google_compute_subnetwork.public-subnetwork_1.ip_cidr_range
+  dest_range = google_compute_subnetwork.public_subnetwork_1.ip_cidr_range
   priority   = 1000
 
   next_hop_vpn_tunnel = google_compute_vpn_tunnel.tunnel_server_to_client.id
