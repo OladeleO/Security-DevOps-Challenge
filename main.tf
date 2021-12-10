@@ -7,17 +7,6 @@ provider "google" {
    zone    = var.zone
 }
 
-#resource "google_container_cluster" "my_vpc_native_cluster" {
-#   name                 = var.gke_cluster_name
-#   location             = var.zone
-#   initial_node_count   = 1
-   
-#   network              = "default"
-#   subnetwork           = "default"
-  
-#}
-
-
 ##### 1st VPC Creation
 
 resource "google_compute_network" "vpc_network_1" {
