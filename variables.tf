@@ -1,6 +1,6 @@
 variable "project" {
   default = "security-devops-challenge"
-  senstive = true 
+  sensitive = true 
 }
 
 variable "region" {
