@@ -1,7 +1,7 @@
-variable "project" {
-  default = secrets.GCP_PROJECT_ID
-  senstive = true 
-}
+#variable "project" {
+#  default = secrets.GCP_PROJECT_ID
+#  senstive = true 
+#}
 
 variable "region" {
   default = "europe-west1"
