@@ -22,7 +22,7 @@ provider "google" {
 
 resource "google_compute_network" "vpc_network_1" {
   project                 = var.project
-  name                    = "vpc-server-github-actions"
+  name                    = "vpc-client-github-actions"
   auto_create_subnetworks = false
   mtu                     = 1460
 }
@@ -31,7 +31,7 @@ resource "google_compute_network" "vpc_network_1" {
 ##### 2nd VPC Creation
 resource "google_compute_network" "vpc_network_2" {
   project                 = var.project
-  name                    = "vpc-client-github-actions"
+  name                    = "vpc-server-github-actions"
   auto_create_subnetworks = false 
   mtu                     = 1460
 }
@@ -96,7 +96,7 @@ resource "google_compute_instance" "vm_1" {
   }
 
   network_interface {
-    subnetwork = google_compute_subnetwork.public-subnetwork_2.name
+    subnetwork = google_compute_subnetwork.public-subnetwork_1.name
   }
 }
 
@@ -124,7 +124,7 @@ resource "google_compute_instance" "vm_2" {
   }
 
   network_interface {
-    subnetwork = google_compute_subnetwork.public-subnetwork_1.name
+    subnetwork = google_compute_subnetwork.public-subnetwork_2.name
     access_config {}
   }
 }
