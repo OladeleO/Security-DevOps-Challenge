@@ -5,11 +5,11 @@
 
 variable "region" {
   default = "europe-west1"
-  senstive = true
+  sensitive = true
 }
 
 variable "zone" {
   default = "europe-west1-b"
-  senstive = true
+  sensitive = true
 }
 
