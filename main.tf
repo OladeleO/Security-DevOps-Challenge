@@ -37,7 +37,7 @@ resource "google_compute_subnetwork" "public_subnetwork_server" {
   name          = "subnet-server-github-actions"
   ip_cidr_range = "192.168.1.0/24"
   region        = "europe-west2"
-  network       = google_compute_network.vpc_network_2.name
+  network       = google_compute_network.vpc_network_server.name
 }
 
 ##### Firewall rule 1st VPC
@@ -240,7 +240,7 @@ resource "google_compute_route" "route_server_to_client" {
 }
 
 output "server_public_ip" {
-  value = google_compute_instance.vm_2.network_interface.0.access_config.0.nat_ip
+  value = google_compute_instance.vm_server.network_interface.0.access_config.0.nat_ip
 }
 
  #######################################################################################
